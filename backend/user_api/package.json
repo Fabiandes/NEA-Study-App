@@ -1,0 +1,18 @@
+{
+  "name": "user_api",
+  "version": "1.0.0",
+  "description": "Simple Restful API that is used to access users information from a mongoDB",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Fabian Desnoes",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-status-monitor": "^1.2.7",
+    "mongoose": "^5.7.10",
+    "node-cache": "^5.0.1"
+  }
+}
