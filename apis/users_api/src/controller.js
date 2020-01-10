@@ -17,6 +17,7 @@ const User = dbConnection.model('User', userSchema);
 
 //Connect to db
 const getUser = async(username)=>{
+    console.log("Getting user")
     const cacheQuery = userCache.get(username)
     if(cacheQuery){
         return cacheQuery
@@ -30,4 +31,20 @@ const getUser = async(username)=>{
     return
 }
 
-module.exports = {getUser};
+const createUser = async(user)=>{
+    if(await getUser(user.username)){
+        console.log("User exists")
+        return
+    }else{
+        console.log("Creating DB entry")
+        //Create to DB
+        await User.create(user)
+        //Add to cache
+        console.log("Adding to cache")
+        userCache.set(user.username, user);
+        //Return user
+        return user
+    }
+}
+
+module.exports = {getUser,createUser};
