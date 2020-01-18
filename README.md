@@ -1,9 +1,9 @@
 # NEA-Study-App
 ## Networking
 ### Ports
-* 'User Api` - 3000
-* 'Group Api` - 3001
-* 'User Service` - 4000
+* `User Api` - 3000
+* `Group Api` - 3001
+* `User Service` - 4000
 
 ## Database
 ### Scehmas
