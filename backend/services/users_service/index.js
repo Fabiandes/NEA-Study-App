@@ -21,14 +21,14 @@ app.post('/login',async(req,res)=>{
         if(token){
             res.cookie('token',token);
         }else{
-            res.statusMessage('Incorrect Credentials.')
+            res.statusMessage = 'Incorrect Credentials.'
             res.status(401);
         } 
     } catch (err) {
         res.statusMessage('Server Error.')
         res.status(500);
     }
-    
+    res.send()
 });
 
 //Register a user
@@ -37,18 +37,40 @@ app.post('/register', async(req,res)=>{
          username: req.body.username,
          password: req.body.password, 
          email: req.body.email,
-         phone: req.body.phone,
+         phoneNumber: req.body.phone,
          firstName: req.body.firstName,
          lastName: req.body.lastName
     }
     try {
-        const userObject = await auth.register(user);
-        console.log("User Created: " + userObject);
-        res.redirect('/verify');
+        const responseStatus = await auth.register(user);
+        // switch(responseStatus){
+        //     case 200:
+        //         console.log("User Created: " + userObject);
+        //         res.status(200)
+        //         break;
+        //     case 409:
+        //         res.status(409)
+        //         res.statusMessage = "User already exists"
+        //     default:
+        //         throw new Error("Status: " + responseStatus)
+        // }
+        if(responseStatus === 200){
+            console.log("User Created: " + user);
+            res.status(200)
+        }else{
+            if(responseStatus === 409){
+                res.status(409)
+                res.statusMessage = "User already exists"
+            }else{
+                throw new Error("Status: " + responseStatus)
+            }
+        }
     } catch (err) {
-        res.statusMessage('Server Error.')
+        console.log(err)
+        res.statusMessage = 'Server Error.'
         res.status(500);
     }
+    res.send()
 })
 
 app.listen(process.env.authPort,()=>{
