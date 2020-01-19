@@ -20,7 +20,9 @@ export default class RegisterForm extends Component {
     }
 
     HandleSubmit = async()=>{
-        const url = "http://www.google.com/"
+        //Validate form
+        //Send request
+        const url = "http://localhost:3000"
         try {
             let response = await fetch(url, {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
@@ -42,11 +44,9 @@ export default class RegisterForm extends Component {
             //Else display status message and empty password field.
           } catch (error) {
             console.error(error);
+            this.setState({error:"Sorry we are having problems creating your account. Please try again later."})
           }
-    }
-
-    SlideUiUp = ()=>{
-        this.setState({slidUp:true})
+        //Redirect
     }
 
   render() {
@@ -67,7 +67,7 @@ export default class RegisterForm extends Component {
                         autoCompleteType="name"
                         autoCorrect={false}
                         maxLength={30}
-                        onChangeText={(text)=> this.setState({firstName:text})}
+                        onChangeText={(text)=> this.setState({firstName:text.trim()})}
                         value = {this.state.firstName}
                     />
                     <TextInput
@@ -77,7 +77,7 @@ export default class RegisterForm extends Component {
                         autoCompleteType="name"
                         autoCorrect={false}
                         maxLength={30}
-                        onChangeText={(text)=> this.setState({lastName:text})}
+                        onChangeText={(text)=> this.setState({lastName:text.trim()})}
                         value = {this.state.lastName}
                     />
                 </View>
@@ -91,7 +91,7 @@ export default class RegisterForm extends Component {
                         autoCompleteType="email"
                         autoCorrect={false}
                         maxLength={100}
-                        onChangeText={(text)=> this.setState({email:text})}
+                        onChangeText={(text)=> this.setState({email:text.trim()})}
                         value = {this.state.email}
                     />
                     <TextInput
@@ -101,12 +101,11 @@ export default class RegisterForm extends Component {
                         autoCompleteType="tel"
                         autoCorrect={false}
                         maxLength={30}
-                        onChangeText={(text)=> this.setState({phoneNumber:text})}
+                        onChangeText={(text)=> this.setState({phoneNumber:text.trim()})}
                         value = {this.state.phoneNumber}
                     />
                 </View>
 
-                <TouchableWithoutFeedback onPress={this.SlideUiUp}>
                 <View style={styles.group}>
                     <TextInput
                         style={styles.input}
@@ -114,8 +113,9 @@ export default class RegisterForm extends Component {
                         autoCompleteType="password"
                         autoCorrect={false}
                         maxLength={250}
-                        onChangeText={(text)=> this.setState({password:text})}
-                        on
+                        onChangeText={(text)=> this.setState({password:text.trim()})}
+                        onFocus={()=>this.setState({slidUp:true})}
+                        onBlur={()=> this.setState({slidUp:false})}
                         value = {this.state.password}
                     />
                     <TextInput
@@ -123,12 +123,13 @@ export default class RegisterForm extends Component {
                         placeholder="Confirm Password"
                         autoCorrect={false}
                         maxLength={250}
-                        onChangeText={(text)=> this.setState({confirmPassword:text})}
+                        onChangeText={(text)=> this.setState({confirmPassword:text.trim()})}
+                        onFocus={()=>this.setState({slidUp:true})}
+                        onBlur={()=>this.setState({slidUp:false})}
                         value = {this.state.confirmPassword}
                     />
                 
                 </View>
-                </TouchableWithoutFeedback>
                 <TouchableOpacity onPress={this.HandleSubmit} style={styles.submit}>
                     <Text style={styles.submitText}>Sign Up</Text>
                 </TouchableOpacity>
@@ -145,7 +146,7 @@ let styles = StyleSheet.create({
         flex:1,
         flexDirection:"column-reverse",
         alignItems:"center",
-        backgroundColor:"#f74040"
+        backgroundColor:"#FF5050"
     },
     noHeader:{
         flex:0
@@ -156,24 +157,25 @@ let styles = StyleSheet.create({
     page:{
         flex:1,
     },
-    pageFlipped:{
-        flex:1,
-        flexDirection:"column-reverse"
-    },
     form: {
         flex:4,
         flexDirection:"column",
         alignItems:"center",
         paddingTop:20,
-        backgroundColor:"#ebedf0"
+        backgroundColor:"purple"
+        //backgroundColor:"#ebedf0"
     },
     group:{
-        alignSelf:"stretch"
+        alignSelf:"stretch",
+        justifyContent:"center",
+        backgroundColor:"green",
+        marginVertical:5
     },
     input:{
-       backgroundColor:"white",
+       backgroundColor:"#EFEFEF",
        marginVertical:5,
-       borderRadius:8,
+       paddingHorizontal:5,
+       borderRadius:4,
        marginHorizontal:25,
        height:50
     },
@@ -182,7 +184,8 @@ let styles = StyleSheet.create({
         alignSelf:"stretch",
         alignItems:"center",
         justifyContent:"center",
-        backgroundColor:"#f74040"
+        marginTop:"auto",
+        backgroundColor:"#FF5050"
     },
     submitText:{
         fontSize:35
