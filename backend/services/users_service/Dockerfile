@@ -1,4 +1,4 @@
-FROM node:10
+FROM node:12.14.1
 
 WORKDIR /usr/src/app
 
@@ -8,6 +8,6 @@ RUN npm ci --only=production
 
 COPY . .
 
-EXPOSE 3001
+EXPOSE 4000
 
 CMD [ "node", "index.js" ]
