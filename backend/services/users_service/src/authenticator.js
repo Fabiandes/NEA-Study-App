@@ -1,69 +1,59 @@
 require('dotenv').config()
 const axios = require('axios');
+var axiosInstance = axios.create({
+    validateStatus: function (status) {
+        return status >= 200 && status < 300 || (status === 409);
+    },
+});
 const jwt = require('jsonwebtoken');
-// const bcrypt = require('bcrypt');
-var bcrypt = require('bcryptjs');
-//const saltRounds = 10;
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
 
 const createUserObject = async(user)=>{
-    bcrypt.genSalt(10, function(err, salt) {
-        bcrypt.hash("B4c0/\/", salt, function(err, hash) {
-            if(!err){
-                const userObject = {
-                    username: user.username,
-                    hash, 
-                    email: user.email,
-                    phone: user.phone,
-                    firstName: user.firstName,
-                    lastName: user.lastName
-                }
-                return userObject;
-            }
-        });
-    });
-    return;
-    //hash = await bcrypt.hash(user.password, saltRounds)
-    // const userObject = {
-    //     username: user.username,
-    //     hash, 
-    //     email: user.email,
-    //     phone: user.phone,
-    //     firstName: user.firstName,
-    //     lastName: user.lastName
-    // }
+    hash = await bcrypt.hash(user.password, saltRounds)
+    const userObject = {
+        username: user.username,
+        hash, 
+        email: user.email,
+        phoneNumber: user.phoneNumber,
+        firstName: user.firstName,
+        lastName: user.lastName
+    }
+    return userObject
 }
 
 const login = async(user)=>{
     try {
          //Query DB
-        const response = await axios.get(process.env.user_db_url,{params:{username:user.username}});
+         const url = process.env.user_db_url + user.username
+         console.log("Making request to " + url)
+        const response = await axiosInstance.get(url);
         if(response.status === 200){
             const data = {
-                username: response.username,
-                roles: response.roles
+                username: response.data.username,
+                roles: response.data.roles
             }
-            if(response.hash === user.password){
+            if(await bcrypt.compare(user.password,response.data.hash)){
                 const token = await jwt.sign(data, process.env.token_key,{expiresIn: '2 days'});
                 return token;
-            }  
+            } 
         } 
-        return;
     } catch (err) {
-        console.log(err);
+        console.log("Error: \n" + err);
+        throw new Error(err)
     }
 }
 
 const register = async(user)=>{
     try {
         //Query DB
-        const userObject = createUserObject(user);
-        const response = await axios.post(process.env.user_db_url + '/user', userObject);
-        console.log(response)
-        if(response.status === 200){
-            return userObject;
-        }
+        const userObject = await createUserObject(user);
+        const url = process.env.user_db_url
+        console.log("Making a request to " + url + " with data:\n" + JSON.stringify(userObject))
+        const response = await axiosInstance.post(url, userObject);
+        return response.status
     } catch (err) {
-       console.log(err);
+        console.log(err)
     }
 }
 

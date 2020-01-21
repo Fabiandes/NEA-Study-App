@@ -6,7 +6,7 @@ import LoginForm from './components/loginForm';
 export default class App extends Component {
   render() {
     return (
-      <LoginForm/>
+      <RegisterForm/>
     );
   }
 }

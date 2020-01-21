@@ -25,7 +25,7 @@ export default class LoginForm extends Component {
                             <FBButton />
                             <GoogleButton title="Google" />
                         </View>
-                        <Text>or</Text>
+                        <Text style={{color:'#7E7C7C'}}>or</Text>
                         <View style={styles.inputForm}>
                             <TextInput
                                 style={styles.input}
@@ -42,14 +42,14 @@ export default class LoginForm extends Component {
                         </View>
                         <View style={styles.footer}>
                             <TouchableWithoutFeedback>
-                                <Text style={{marginBottom:5}}>Forgot Password?</Text>
+                                <Text style={{marginBottom:5,color:'#7E7C7C'}}>Forgot Password?</Text>
                             </TouchableWithoutFeedback>
                             <TouchableWithoutFeedback>
-                                <Text style={{marginBottom:5}}>Haven't got an account? Create one!</Text>
+                                <Text style={{marginBottom:5,color:'#7E7C7C'}}>Haven't got an account? Create one!</Text>
                             </TouchableWithoutFeedback>
                             
                             <TouchableOpacity style={styles.sumbitButton}>
-                                <Text>LOGIN</Text>
+                                <Text style={{color:"white", fontSize:30}}>LOGIN</Text>
                             </TouchableOpacity>
                             
                         </View>
@@ -96,6 +96,7 @@ const styles = StyleSheet.create({
         borderRadius: 4,
         marginHorizontal: 25,
         height: 45,
+        fontSize:20,
         shadowColor: "#000",
         shadowOffset: {
             width: 0,
