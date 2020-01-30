@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet } from 'react-native';
 import RegisterForm from './components/registerForm';
 import LoginForm from './components/loginForm';
+import Dashboard from './components/pages/dashboardPage'
 
 export default class App extends Component {
   render() {

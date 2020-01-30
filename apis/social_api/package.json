@@ -1,0 +1,15 @@
+{
+  "name": "social_api",
+  "version": "1.0.0",
+  "description": "Simple api that serves data ",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Fabian Desnoes",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.1",
+    "mongoose": "^5.8.9"
+  }
+}
