@@ -1,0 +1,21 @@
+version: '3'
+
+services:
+    user_service:
+        build: ./backend/services/users_service
+        ports:
+            - 4000:4000
+        depends_on:
+            - users_api
+    users_api:
+        build: ./apis/users_api
+        ports:
+            - 3000:3000
+    nginx:
+        build: ./backend/nginx
+        ports:
+            - 8080:80
+        depends_on: 
+            - user_service
+            - users_api
+        

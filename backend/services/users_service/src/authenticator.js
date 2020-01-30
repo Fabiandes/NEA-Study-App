@@ -39,7 +39,6 @@ const login = async(user)=>{
             } 
         } 
     } catch (err) {
-        console.log("Error: \n" + err);
         throw new Error(err)
     }
 }

@@ -14,13 +14,12 @@ app.use(bodyParser.json());
 app.get('/user/:username',async(req,res)=>{
     try {
         const user = await controller.getUser(req.params.username);
-        console.log("user: " + user.username)
         console.log("Time to direct")
         if(user === undefined){
             res.statusMessage = 'User not found.';
             res.status(404);
         }else{
-            console.log("User")
+            console.log("user: " + user.username)
             res.json(user);
         }
         console.log("Nothing")
