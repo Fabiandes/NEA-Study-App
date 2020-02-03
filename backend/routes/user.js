@@ -1,20 +1,10 @@
-require('dotenv').config();
-const auth = require('./src/authenticator');
+const auth = require('../services/auth_service');
 
 const express = require('express');
-const bodyParser = require('body-parser');
-const app = express();
-
-app.use(require('express-status-monitor')());
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
-//Start a https server.
-//Define Routes.
-//Logging
-//Monitoring.
+const router = express().Router();
 
 //Log a user in
-app.post('/login',async(req,res)=>{
+router.post('/login',async(req,res)=>{
     const user = {username: req.body.username, password: req.body.password};
     try {
         const token = await auth.login(user);
@@ -33,7 +23,7 @@ app.post('/login',async(req,res)=>{
 });
 
 //Register a user
-app.post('/register', async(req,res)=>{
+router.post('/register', async(req,res)=>{
     const user = {
          username: req.body.username,
          password: req.body.password, 
@@ -74,6 +64,4 @@ app.post('/register', async(req,res)=>{
     res.send()
 })
 
-app.listen(process.env.authPort,()=>{
-    console.log('Server is listening on port ' + process.env.authPort);
-});
+module.exports ={router};

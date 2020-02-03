@@ -1,8 +1,8 @@
 version: '3'
 
 services:
-    user_service:
-        build: ./backend/services/users_service
+    backend:
+        build: ./backend/
         ports:
             - 4000:4000
         depends_on:

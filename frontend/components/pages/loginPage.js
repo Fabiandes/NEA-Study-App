@@ -14,7 +14,7 @@ export default class LoginPage extends Component {
     }
 
     handleSubmit(){
-        const url = "http://localhost:4000/login"
+        const url = "http://user_service:4000/login"
         try {
             let response = await fetch(url, {
                 method: 'POST', // *GET, POST, PUT, DELETE, etc.
