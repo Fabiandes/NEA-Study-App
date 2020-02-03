@@ -1,7 +1,7 @@
 const auth = require('../services/auth_service');
 
 const express = require('express');
-const router = express().Router();
+const router = express.Router();
 
 //Log a user in
 router.post('/login',async(req,res)=>{

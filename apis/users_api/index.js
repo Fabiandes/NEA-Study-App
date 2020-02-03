@@ -55,6 +55,6 @@ app.post('/user',async(req,res)=>{
 //Update a user
 
 //Start Server
-app.listen(process.env.userPort,()=>{
-    console.log('User API starting on port ' + process.env.userPort);
+app.listen(5000,()=>{
+    console.log('User API starting on port ' + 5000);
 });
