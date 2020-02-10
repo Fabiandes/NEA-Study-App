@@ -14,15 +14,12 @@ app.use(bodyParser.json());
 app.get('/user/:username',async(req,res)=>{
     try {
         const user = await controller.getUser(req.params.username);
-        console.log("Time to direct")
         if(user === undefined){
             res.statusMessage = 'User not found.';
             res.status(404);
         }else{
-            console.log("user: " + user.username)
             res.json(user);
         }
-        console.log("Nothing")
     } catch (err) {
         console.log("Error:" + err)
         res.statusMessage = 'Server Error.';
@@ -33,9 +30,7 @@ app.get('/user/:username',async(req,res)=>{
 
 //Create a user
 app.post('/user',async(req,res)=>{
-    console.log("Register Request")
     try {
-        console.log("Body: " + JSON.stringify(req.body))
         const user = await controller.createUser(req.body);
         if(user){
             res.status(200);
