@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const DB_URI = process.env.DB_URI || 'mongodb+srv://fabiandes:Tablelegs123@studyapp-kyldd.mongodb.net/test?retryWrites=true&w=majority';
+
 const Schema = mongoose.Schema;
-const dbConnection = mongoose.createConnection(process.env.db_uri,{ useNewUrlParser: true });
+const dbConnection = mongoose.createConnection(DB_URI,{ useNewUrlParser: true });
 const User = dbConnection.model('User', userSchema);
 
 let userSchema = new Schema({

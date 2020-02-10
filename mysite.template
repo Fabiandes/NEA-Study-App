@@ -1,5 +1,0 @@
-server{
-    location / {
-        proxy_pass http://user_service:4000;
-    }
-}
