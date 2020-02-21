@@ -1,0 +1,11 @@
+{
+  "name": "apis",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Fabian Desnoes",
+  "license": "ISC"
+}
