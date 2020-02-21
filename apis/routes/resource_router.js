@@ -2,7 +2,7 @@
 const express = require('express');
 const app = express();
 
-const ResourceManager = require('./src/controller');
+const ResourceManager = require('../src/resource_controller');
 
 //========ENVIROMENT-VARIABLES========
 const PORT = process.env.PORT || 6000;
