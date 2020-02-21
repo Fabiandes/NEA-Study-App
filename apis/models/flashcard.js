@@ -1,23 +1,24 @@
 const mongoose = require('mongoose');
-const USERNAME = process.env.db_username || 'test-user';
-const PASSWORD = process.env.db_password || 'dW1JJglBFeca4R3T'
-const DB_URI = `mongodb+srv://${USERNAME}:${PASSWORD}@studyapp-kyldd.mongodb.net/test?retryWrites=true&w=majority`;
-
 const Schema = mongoose.Schema;
-const dbConnection = mongoose.createConnection(DB_URI,{ useNewUrlParser: true });
 
 let CardSchema = new Schema({
     question:{
         type:String,
-        maxlength: 50
+        maxlength: 50,
+        required: true
     },
-    answer:{
-        type:String,
-        maxlength: 100
+    answers:{
+        type:[String],
+        maxlength: 4,
+        required: true
+    },
+    correctAnswer:{
+        type:Number,
+        required: true
     }
  })
 
-let FlashcardSchema = new Schema({
+let CardSetSchema = new Schema({
    title:{
        type: String,
        required:true,
@@ -34,10 +35,15 @@ let FlashcardSchema = new Schema({
    lastRead:{
        type:Date,
        default:Date.now
+   },
+   weaknesses:{
+       type:Number,
+       default:-1
    }
 
 })
 
-const Flashcard = dbConnection.model('Flashcard', FlashcardSchema);
+const Flashcard = mongoose.model('Flashcard', FlashcardSchema);
+const Card = mongoose.model('Card', CardSchema)
 
-module.exports = {Flashcard, CardSchema};
+module.exports = {Flashcard, Card};

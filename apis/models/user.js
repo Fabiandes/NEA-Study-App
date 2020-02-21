@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const DB_URI = process.env.DB_URI || 'mongodb+srv://fabiandes:Tablelegs123@studyapp-kyldd.mongodb.net/test?retryWrites=true&w=majority';
 
 const Schema = mongoose.Schema;
-const dbConnection = mongoose.createConnection(DB_URI,{ useNewUrlParser: true });
-const User = dbConnection.model('User', userSchema);
 
 let userSchema = new Schema({
     username:{
@@ -47,5 +44,7 @@ let userSchema = new Schema({
         default:Date.now
     }
 })
+
+const User = mongoose.model('User', userSchema);
 
 module.exports = {User};
