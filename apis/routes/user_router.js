@@ -2,7 +2,7 @@ require('dotenv').config()
 const controller = require('./src/controller.js');
 
 const express = require('express');
-const app = express();
+const app = express().Router();
 const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5050;
@@ -51,7 +51,4 @@ app.post('/user',async(req,res)=>{
 //Remove a user
 //Update a user
 
-//Start Server
-app.listen(PORT,()=>{
-    console.log('User API starting on port ' + PORT);
-});
+module.exports = {app}
