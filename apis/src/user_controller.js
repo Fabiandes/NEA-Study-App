@@ -12,8 +12,8 @@ const getUser = async(username)=>{
         const user = await User.findOne({username}).exec()
         if(user){
             userCache.set(username, user);
-            return user;
         }
+        return user;
     }
 }
 
@@ -34,11 +34,8 @@ const checkUserExists = async(user)=>{
 }
 
 const createUser = async(user)=>{
-    console.log("Checking user exists")
     if(!await checkUserExists(user)){
         //Create to DB
-        console.log("Creating user")
-        console.log(user)
         await User.create(user)
         //Add to cache
         userCache.set(user.username, user);
@@ -53,6 +50,7 @@ const CreateSubject = (username, name)=>{
         SubjectName:name
     })
     //Append this to users subjects
+    console.log("Append to existing subjects")
     User.update(
         { username: username }, 
         { $push: { subjects: subject } },

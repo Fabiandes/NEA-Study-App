@@ -12,7 +12,7 @@ app.use(bodyParser.json());
 
 //Get a user
 //Add username from query
-app.get('/user/:username',async(req,res)=>{
+app.get('/:username',async(req,res)=>{
     try {
         const user = await controller.getUser(req.params.username);
         if(user === undefined){

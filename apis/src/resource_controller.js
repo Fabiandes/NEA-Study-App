@@ -1,19 +1,17 @@
 const mongoose = require('mongoose')
 
 const Note = require('../models/note').Note
-const Subject = require('../models/subject').Subject;
 const User = require('../models/user').User;
 
-const Flashcard = require('../models/cardset').Flashcard
-const cardSchema = require('../models/cardset').CardSchema
 
 
 //Create subject
-const CreateSubject = (username, subject_name)=>{
-    const subject = new Subject({SubjectName:subject_name})
-    console.log("Subject object created")
-    User.findOneAndUpdate({username:username},{ $push: { subjects: subject } })
-    console.log("DB updated")
+const CreateSubject = async(username, subject_name)=>{
+    User.updateOne(
+        {username:username}, 
+        { $push: { subjects: {SubjectName:subject_name} } },
+    )
+    .then(console.log("User updated"));
 }
 
 //Create topic

@@ -41,11 +41,13 @@ let userSchema = new Schema({
         type:Array,
         default:[]
     },
-    subjects:{
-        maxlength:200,
-        default:[],
-        type:[SubjectSchema]
-    },
+    subjects:[
+        {
+            maxlength:200,
+            default:[],
+            type:SubjectSchema
+        }
+    ],
     joinDate:{
         type:Date,
         default:Date.now

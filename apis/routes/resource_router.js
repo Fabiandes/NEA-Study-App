@@ -13,10 +13,17 @@ const PORT = process.env.PORT || 6000;
 
 //Create subject
 app.post('/subject',(req,res)=>{
-    const username = req.body.username;
-    const subject_name = req.body.subject_name;
-    console.log(`Creating note for ${username} called ${subject_name}`)
-    ResourceManager.CreateSubject(username, subject_name);
+    try {
+        const username = req.body.username;
+        const subject_name = req.body.subject_name;
+        console.log(`Creating note for ${username} called ${subject_name}`)
+        ResourceManager.CreateSubject(username, subject_name);
+        res.status(200);
+    } catch (err) {
+        res.statusMessage = 'Server Error.';
+        res.status(500);
+    }
+    res.send()
 })
 //Create Topic
 app.post('/topic',(req,res)=>{
