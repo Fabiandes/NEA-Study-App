@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const NodeCache = require('node-cache');
 const userCache = new NodeCache();
-const User = require('../models/user')
+const User = require('../models/user').User;
 
 //Connect to db
 const getUser = async(username)=>{
@@ -9,7 +9,7 @@ const getUser = async(username)=>{
     if(cacheQuery){
         return cacheQuery
     }else{
-        const user = await User.findOne({username:username}).exec()
+        const user = await User.findOne({username}).exec()
         if(user){
             userCache.set(username, user);
             return user;
@@ -18,7 +18,14 @@ const getUser = async(username)=>{
 }
 
 const checkUserExists = async(user)=>{
-    const exists = await User.findOne({$or: [{username:user.username}, {email:user.email}]}).exec()
+    console.log("Finding user")
+    // try {
+    //     //const exists = await User.findOne({$or: [{username:user.username}, {email:user.email}]}).exec()
+    // } catch (err) {
+    //     console.log("There was an error trying to find a user.")
+    // }
+    const exists = await User.findOne({username:user.username}).exec()
+    console.log("User found")
     if(exists){
         return true
     }else{
@@ -27,8 +34,11 @@ const checkUserExists = async(user)=>{
 }
 
 const createUser = async(user)=>{
+    console.log("Checking user exists")
     if(!await checkUserExists(user)){
         //Create to DB
+        console.log("Creating user")
+        console.log(user)
         await User.create(user)
         //Add to cache
         userCache.set(user.username, user);

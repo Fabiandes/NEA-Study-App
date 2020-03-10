@@ -38,7 +38,8 @@ let userSchema = new Schema({
         required:true,
     },
     roles:{
-        type:Array
+        type:Array,
+        default:[]
     },
     subjects:{
         maxlength:200,
