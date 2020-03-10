@@ -1,6 +1,6 @@
 //========REQUIREMENTS========
 const express = require('express');
-const app = express().Router();
+const app = express.Router();
 const axios = require('axios');
 
 const authURI = process.env.authURI || 'http://localhost:5000/api/v1/auth/'
@@ -11,7 +11,19 @@ const PORT = process.env.PORT || 6000;
 
 //========ROUTES========
 
-app.post('/note',(req,res)=>{
+//Create subject
+app.post('/subject',(req,res)=>{
+    const username = req.body.username;
+    const subject_name = req.body.subject_name;
+    console.log(`Creating note for ${username} called ${subject_name}`)
+    ResourceManager.CreateSubject(username, subject_name);
+})
+//Create Topic
+app.post('/topic',(req,res)=>{
+    
+})
+//Create note
+app.post('/note',async(req,res)=>{
     //We need the user name to update who actually has access to this note.
     const token = req.cookies.token;
     //Check to see if cookie is tampered with.
@@ -27,6 +39,21 @@ app.post('/note',(req,res)=>{
         ResourceManager.StoreNote(title, body)
     }
 })
+//Add questions to note
+app.post('/question',(req,res)=>{
+    
+})
+//Create flashcards
+app.post('/flashcard',(req,res)=>{
+    
+})
+
+//Get subjects
+//Get topics
+//Get notes
+//Get questiond
+//Get flashcards
+
 
 module.exports = {app}
 

@@ -1,5 +1,4 @@
 const mongoose = require('mongoose');
-require('dotenv').config()
 const NodeCache = require('node-cache');
 const userCache = new NodeCache();
 const User = require('../models/user')
@@ -38,4 +37,16 @@ const createUser = async(user)=>{
     }
 }
 
+//Create subject
+const CreateSubject = (username, name)=>{
+    const subject = new Subject({
+        SubjectName:name
+    })
+    //Append this to users subjects
+    User.update(
+        { username: username }, 
+        { $push: { subjects: subject } },
+        done
+    );
+}
 module.exports = {getUser,createUser};

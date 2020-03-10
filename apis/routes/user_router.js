@@ -1,8 +1,7 @@
-require('dotenv').config()
-const controller = require('./src/controller.js');
+const controller = require('../src/user_controller');
 
 const express = require('express');
-const app = express().Router();
+const app = express.Router();
 const bodyParser = require('body-parser');
 
 const PORT = process.env.PORT || 5050;
@@ -31,7 +30,7 @@ app.get('/user/:username',async(req,res)=>{
 })
 
 //Create a user
-app.post('/user',async(req,res)=>{
+app.post('/',async(req,res)=>{
     try {
         const user = await controller.createUser(req.body);
         if(user){
@@ -50,5 +49,6 @@ app.post('/user',async(req,res)=>{
 
 //Remove a user
 //Update a user
+//Get a users subjects
 
 module.exports = {app}

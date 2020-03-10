@@ -3,6 +3,8 @@ const express = require('express');
 const PORT = process.env.PORT || 6000;
 
 const app = express();
+var cookieParser = require('cookie-parser')
+app.use(cookieParser())
 app.use(require('express-status-monitor')());
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());

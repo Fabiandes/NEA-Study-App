@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;
+const SubjectSchema = require('./subject').SubjectSchema;
 
 let userSchema = new Schema({
     username:{
@@ -38,6 +39,11 @@ let userSchema = new Schema({
     },
     roles:{
         type:Array
+    },
+    subjects:{
+        maxlength:200,
+        default:[],
+        type:[SubjectSchema]
     },
     joinDate:{
         type:Date,

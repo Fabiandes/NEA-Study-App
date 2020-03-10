@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
+const CardSetSchema = require('./cardset').CardSetSchema
 
 let NoteSchema = new Schema({
    title:{
@@ -10,6 +11,9 @@ let NoteSchema = new Schema({
    body:{
        type: String,
        required:true
+   },
+   questions:{
+        type:CardSetSchema
    },
    dateCreated:{
        type: Date,
@@ -22,6 +26,6 @@ let NoteSchema = new Schema({
 
 })
 
-const Note = dbConnection.model('Note', NoteSchema);
+const Note = mongoose.model('Note', NoteSchema);
 
-module.exports = {Note};
+module.exports = {Note, NoteSchema};
