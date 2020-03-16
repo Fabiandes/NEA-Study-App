@@ -7,25 +7,30 @@ const User = require('../models/user').User;
 
 //Create subject
 const CreateSubject = async(username, subject_name)=>{
-    User.updateOne(
-        {username:username}, 
-        { $push: { subjects: {SubjectName:subject_name} } },
-    )
-    .then(console.log("User updated"));
+    try {
+        const queryResult = await User.updateOne(
+            {"username":username}, 
+            { $push: { subjects: {SubjectName:subject_name} } }
+        ).exec();
+        return queryResult.nModified;
+    } catch (err) {
+        console.log("There was an error tryng to create a subject.\n" + err)
+    }
+    //console.log("Completing updating user: " + JSON.stringify(user));
 }
 
 //Create topic
-const CreateTopic = (username, subject, name)=>{
-    const topic = new topic({
-        TopicName:name
-    })
-    //Not finished
-    username.findById(username)
-    Subject.update(
-        { SubjectName: subject }, 
-        { $push: { Topics: topic } },
-        done
-    );
+const CreateTopic = async(username, subject, name)=>{
+    try{
+        const queryResponse = await User.updateOne(
+            {"username":username},
+            {$push: {'subjects.$[element].Topics': {'TopicName': name}}},
+            { arrayFilters: [{ 'element.SubjectName': subject }] }
+        ).exec()
+        return queryResponse.nModified;
+    }catch(err){
+        console.log("Error creating topic")
+    }
 }
 //Create note
 const CreateNote = (title, body)=>{
@@ -64,4 +69,4 @@ const StoreNote = (title, body)=>{
     .catch((err)=>{throw new Error(err);})
 }
 
-module.exports= {StoreNote, CreateSubject}
+module.exports= {CreateSubject, CreateTopic}

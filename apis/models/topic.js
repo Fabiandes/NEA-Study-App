@@ -8,13 +8,14 @@ const TopicSchema = new Schema({
         maxlength:50,
         minlength:1,
         required:true,
+        unique:true,
         type:String
     },
-    Notes:{
+    Notes:[{
         maxlength: 250,
         default: [],
-        type: [NoteSchema]
-    },
+        type: NoteSchema
+    }],
     Flashcards:{
         maxlength: 250,
         default:[],
