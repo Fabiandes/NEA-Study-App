@@ -48,19 +48,20 @@ app.post('/topic',async(req,res)=>{
 //Create note
 app.post('/note',async(req,res)=>{
     //We need the user name to update who actually has access to this note.
-    const token = req.cookies.token;
+    //const token = req.cookies.token;
     //Check to see if cookie is tampered with.
-    const response = await axios.post(authURI + 'verify', {
-        token
-    })
-    if(!response.data.result){
-        //Needs to login as token is wrong
+    const username = req.body.username.trim();
+    const topicName = req.body.topic_name.trim();
+    const title = req.body.title.trim();
+    const body = req.body.body.trim();
+    const nModified = await ResourceManager.CreateNote(username, topicName, title, body);
+    if(nModified == 1){
+        res.status(200)
     }else{
-        //Call the user service to update the user.
-        const title = req.body.title;
-        const body = req.body.body
-        ResourceManager.StoreNote(title, body)
+        res.status(404)
+        res.statusMessage = "User not found"
     }
+    res.send()
 })
 //Add questions to note
 app.post('/question',(req,res)=>{

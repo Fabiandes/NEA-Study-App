@@ -33,22 +33,24 @@ const CreateTopic = async(username, subject, name)=>{
     }
 }
 //Create note
-const CreateNote = (title, body)=>{
-    const note = new Note({
-        title,
-        body
-    })
+const CreateNote = (username, topicName,title, body)=>{
+    const queryResponse = await User.updateOne(
+        {"username":username},
+        {$push: {'subjects.Topics.$[element].Notes': {'title': title, 'body':body}}},
+        { arrayFilters: [{ 'element.TopicName': topicName }] }
+    ).exec()
+    console.log(queryResponse)
+    return queryResponse.nModified;
 }
 //Create flashcards
-const CreateFlashcard = (subject, title, cards)=>{
-    //Convert cards into objects
-    const Cards = [cards.length]
-    for (let i = 0; i < cards.length; i++) {
-        Cards[i] = new Card({})
-    }
-    //Create flashcards
-    //Append flashcards onto existing list
-    Subject.findByIdAndUpdate()
+const CreateFlashcard = (username, topicName, title, cards)=>{
+    const queryResponse = await User.updateOne(
+        {"username":username},
+        {$push: {'subjects.Topics.$[element].Flashcards': {'title': title, 'cards':cards}}},
+        { arrayFilters: [{ 'element.TopicName': topicName }] }
+    ).exec()
+    console.log(queryResponse)
+    return queryResponse.nModified;
 }
 //Create questions  
 const CreateQuestions = (note, questions)=>{
@@ -69,4 +71,4 @@ const StoreNote = (title, body)=>{
     .catch((err)=>{throw new Error(err);})
 }
 
-module.exports= {CreateSubject, CreateTopic}
+module.exports= {CreateSubject, CreateTopic, CreateNote, CreateFlashcard}

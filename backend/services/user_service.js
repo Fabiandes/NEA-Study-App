@@ -2,12 +2,24 @@
 //Update
 //Forgot Password
 const GetDashboard = (username)=>{
-    //Find the user
-    //Get all subjects they have
-    //Get 5 Recomended
-    //Get last Accessed
-    //return data
+    //Get the user, send back the subjects folder alongside there username.
+    try {
+             //Query DB
+        const url = 'http://users_api:5000/user/' + user.username
+        console.log("Making request to " + url)
+        const response = await axiosInstance.get(url);
+        if(response.status === 200){
+            const data = {
+                username:response.data.username,
+                subjects:response.data.subjects
+            }
+            return data;
+        }else{
 
-    //Get leaderboard
-    //Get events
+        }
+    } catch (error) {
+        console.log("Error getting dashboard.\n" + error);
+    }
 }
+
+module.exports = {GetDashboard};

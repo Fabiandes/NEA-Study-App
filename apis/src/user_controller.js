@@ -43,18 +43,4 @@ const createUser = async(user)=>{
         return user
     }
 }
-
-//Create subject
-const CreateSubject = (username, name)=>{
-    const subject = new Subject({
-        SubjectName:name
-    })
-    //Append this to users subjects
-    console.log("Append to existing subjects")
-    User.update(
-        { username: username }, 
-        { $push: { subjects: subject } },
-        done
-    );
-}
 module.exports = {getUser,createUser};

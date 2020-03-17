@@ -1,4 +1,5 @@
 const auth = require('../services/auth_service');
+const UserService = require('../services/user_service');
 
 const express = require('express');
 const router = express.Router();
@@ -64,4 +65,9 @@ router.post('/register', async(req,res)=>{
     res.send()
 })
 
-module.exports ={router};
+router.get('/dashboard',async(req,res)=>{
+    const data = await UserService.GetDashboard();
+    res.send(data);
+})
+
+module.exports ={router}
