@@ -25,15 +25,23 @@ const SessionManager = require('./session_management')
 // }
 
 const GetDashboard = async(username)=>{
+    let data = {}
     //Get last session
     const last_session = SessionManager.GetUserSession(username)
     if(last_session){
 
     }else{
         //Get first 5 topics
-        const url = `http://localhost:6000/api/v1/resource/${username}/topics`
+        const url = `http://localhost:6000/api/v1/resource/topics/${username}/5`
+        const response = await axiosInstance.get(url);
+        if(response.status === 200){
+            data.topics = response.body.topics
+        }else{
+
+        }
     }
     //get leaderboard
+    return data
 }
 
 module.exports = {GetDashboard};

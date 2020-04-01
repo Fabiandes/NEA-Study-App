@@ -70,4 +70,4 @@ router.get('/dashboard',async(req,res)=>{
     res.send(data);
 })
 
-module.exports ={router}
+module.exports = {router}
