@@ -23,7 +23,7 @@ const CreateSubject = async(username, subject_name)=>{
 const GetSubjects = async(username, amount = -1)=>{
     const user = await UserController.getUser(username)
     if(amount != -1){
-        if(amount < user.subjects.Length){
+        if(amount < user.subjects.length){
             return user.subjects.slice(0,amount)
         }
     }
@@ -60,14 +60,19 @@ const GetTopic = async(username, subjectName, topicName)=>{
     }
 }
 
-const GetTopics = async(username, subjectName)=>{
+const GetTopics = async(username, amount)=>{
+    let topics = []
     const user = await UserController.getUser(username)
     if(user){
-        user.subjects.forEach(subject => {
-            if(subject.SubjectName == subjectName){
-                return subject.Topics
+        for (let i = 0; i < user.subjects.length; i++) {
+            for (let t = 0; t < user.subjects[i].topics.length; t++) {
+                topics.push(user.subjects[i].topics[t])
+                if(topics.length == amount){
+                    return topics
+                }
             }
-        });
+        }
+        return topics
     }
 }
 
