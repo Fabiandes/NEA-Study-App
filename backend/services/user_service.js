@@ -31,6 +31,7 @@ const GetDashboard = async(username)=>{
 
     }else{
         //Get first 5 topics
+        const url = `http://localhost:6000/api/v1/resource/${username}/topics`
     }
     //get leaderboard
 }

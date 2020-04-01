@@ -72,20 +72,19 @@ app.post('/flashcard',(req,res)=>{
 })
 
 //Get subjects
+//Get topic
+app.get('/topic/:username/:subject_name/:topic_name',async(req,res)=>{
+    const username = req.params.username
+    const subject_name = req.params.subject_name
+    const topic_name = req.body.params.topic_name
+    const topic = await ResourceManager.GetTopic(username,subject_name,topic_name)
+    res.send(topic)
+})
 //Get topics
-app.get('/topics',async(req,res)=>{
-    const username = req.body.username
-    const subject_name = req.body.subject_name
-    const topic_name = req.body.topic_name
-    const amount = req.body.amount
-    let topics = []
-    if(subject_name && topic_name){
-        topics.push(await ResourceManager.GetTopic(username,subject_name,topic_name))
-    }else{
-        if(amount){
-            topics = await ResourceManager.GetTopics(usernmae,amount)
-        }
-    }
+app.get('/topics/:username/:amount',async(req,res)=>{
+    const username = req.params.username
+    const amount = req.params.amount
+    const topics = await ResourceManager.GetTopics(username,amount)
     res.send(topics)
 })
 //Get notes
