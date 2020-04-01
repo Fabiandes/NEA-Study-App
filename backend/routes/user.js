@@ -65,8 +65,9 @@ router.post('/register', async(req,res)=>{
     res.send()
 })
 
-router.get('/dashboard',async(req,res)=>{
-    const data = await UserService.GetDashboard();
+router.get('/dashboard/:username',async(req,res)=>{
+    const username = req.params.username
+    const data = await UserService.GetDashboard(username);
     res.send(data);
 })
 

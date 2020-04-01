@@ -61,23 +61,33 @@ const GetTopic = async(username, subjectName, topicName)=>{
 }
 
 const GetTopics = async(username, amount)=>{
-    let topics = []
-    const user = await UserController.getUser(username)
-    if(user){
-        for (let i = 0; i < user.subjects.length; i++) {
-            for (let t = 0; t < user.subjects[i].topics.length; t++) {
-                topics.push(user.subjects[i].topics[t])
-                if(topics.length == amount){
-                    return topics
+    try{
+        let topics = []
+        const user = await UserController.getUser(username)
+        console.log("Got user")
+        //console.log(user)
+        if(user){
+            for (let i = 0; i < user.subjects.length; i++) {
+                console.log(`Subject ${i}/${user.subjects.length}`)
+                //console.log("topics: " + user.subjects[0].Topics[0])
+                for (let t = 0; t < user.subjects[i].Topics.length; t++) {
+                    //console.log("Topic name: " + user.subjects[i].Topics[t])
+                    topics.push(user.subjects[i].Topics[t])
+                    if(topics.length == amount){
+                        return topics
+                    }
                 }
             }
+            return topics
         }
-        return topics
+    }catch(error){
+        console.log("Error in GetTopic")
+        console.log("Error: " + error)
     }
 }
 
 //Create note
-const CreateNote = (username, topicName,title, body)=>{
+const CreateNote = async(username, topicName,title, body)=>{
     const queryResponse = await User.updateOne(
         {"username":username},
         {$push: {'subjects.Topics.$[element].Notes': {'title': title, 'body':body}}},
@@ -87,7 +97,7 @@ const CreateNote = (username, topicName,title, body)=>{
     return queryResponse.nModified;
 }
 //Create flashcards
-const CreateFlashcard = (username, topicName, title, cards)=>{
+const CreateFlashcard = async(username, topicName, title, cards)=>{
     const queryResponse = await User.updateOne(
         {"username":username},
         {$push: {'subjects.Topics.$[element].Flashcards': {'title': title, 'cards':cards}}},

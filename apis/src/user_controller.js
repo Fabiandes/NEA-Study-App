@@ -5,15 +5,21 @@ const User = require('../models/user').User;
 
 //Connect to db
 const getUser = async(username)=>{
-    const cacheQuery = userCache.get(username)
+    try {
+        const cacheQuery = userCache.get(username)
     if(cacheQuery){
         return cacheQuery
     }else{
+        console.log("DB qUERY")
         const user = await User.findOne({username}).exec()
         if(user){
-            userCache.set(username, user);
+            //userCache.set(username, user);
         }
         return user;
+    }
+    } catch (error) {
+        console.log("Error getting user: " + username)
+        console.log(error)
     }
 }
 

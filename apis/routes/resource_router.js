@@ -82,10 +82,17 @@ app.get('/topic/:username/:subject_name/:topic_name',async(req,res)=>{
 })
 //Get topics
 app.get('/topics/:username/:amount',async(req,res)=>{
-    const username = req.params.username
-    const amount = req.params.amount
-    const topics = await ResourceManager.GetTopics(username,amount)
-    res.send(topics)
+    try {
+        const username = req.params.username
+        const amount = req.params.amount
+        const topics = await ResourceManager.GetTopics(username,amount)
+        console.log("got topics")
+        res.send(topics)
+    } catch (error) {
+        console.log("Error getting topics")
+        console.log(error)
+        console.log(`username: ${username}\namount:${amount}`)
+    }
 })
 //Get notes
 //Get questiond
