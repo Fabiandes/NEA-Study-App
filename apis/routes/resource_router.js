@@ -5,7 +5,6 @@ const axios = require('axios');
 
 const authURI = process.env.authURI || 'http://localhost:5000/api/v1/auth/'
 const ResourceManager = require('../src/resource_controller');
-
 //========ENVIROMENT-VARIABLES========
 const PORT = process.env.PORT || 6000;
 
@@ -74,6 +73,21 @@ app.post('/flashcard',(req,res)=>{
 
 //Get subjects
 //Get topics
+app.get('/topics',async(req,res)=>{
+    const username = req.body.username
+    const subject_name = req.body.subject_name
+    const topic_name = req.body.topic_name
+    const amount = req.body.amount
+    let topics = []
+    if(subject_name && topic_name){
+        topics.push(await ResourceManager.GetTopic(username,subject_name,topic_name))
+    }else{
+        if(amount){
+            topics = await ResourceManager.GetTopics(usernmae,amount)
+        }
+    }
+    res.send(topics)
+})
 //Get notes
 //Get questiond
 //Get flashcards
