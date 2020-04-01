@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const UserController = require('./user_controller')
 
 const Note = require('../models/note').Note
 const User = require('../models/user').User;
@@ -32,6 +33,34 @@ const CreateTopic = async(username, subject, name)=>{
         console.log("Error creating topic")
     }
 }
+
+//Get topic
+const GetTopic = async(username, subjectName, topicName)=>{
+    const user = await UserController.getUser(username)
+    if(user){
+        user.subjects.forEach(subject => {
+            if(subject.SubjectName == subjectName){
+                subject.Topics.forEach(topic => {
+                    if(topic.TopicName == topicName){
+                        return topic
+                    }
+                });
+            }
+        });
+    }
+}
+
+const GetTopics = async(username, subjectName)=>{
+    const user = await UserController.getUser(username)
+    if(user){
+        user.subjects.forEach(subject => {
+            if(subject.SubjectName == subjectName){
+                return subject.Topics
+            }
+        });
+    }
+}
+
 //Create note
 const CreateNote = (username, topicName,title, body)=>{
     const queryResponse = await User.updateOne(
