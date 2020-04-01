@@ -19,6 +19,16 @@ const CreateSubject = async(username, subject_name)=>{
     }
     //console.log("Completing updating user: " + JSON.stringify(user));
 }
+//Get subjects
+const GetSubjects = async(username, amount = -1)=>{
+    const user = await UserController.getUser(username)
+    if(amount != -1){
+        if(amount < user.subjects.Length){
+            return user.subjects.slice(0,amount)
+        }
+    }
+    return user.subjects
+}
 
 //Create topic
 const CreateTopic = async(username, subject, name)=>{
