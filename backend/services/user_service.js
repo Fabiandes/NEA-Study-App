@@ -34,7 +34,7 @@ const GetDashboard = async(username)=>{
     
         }else{
             //Get first 5 topics
-            const url = `http://localhost:6000/api/v1/resource/topics/${username}/5`
+            const url = `http://api:6000/api/v1/resource/topics/${username}/5`
             const response = await axios.get(url);
             if(response.status === 200){
                 console.log("Body: " + JSON.stringify(response.data))

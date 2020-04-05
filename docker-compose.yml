@@ -8,6 +8,6 @@ services:
         depends_on:
             - api
     api:
-        build: ./apis
-    
+        build: ./apis/
+
         

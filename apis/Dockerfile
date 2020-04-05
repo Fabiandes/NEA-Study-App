@@ -9,3 +9,5 @@ RUN npm ci --only=production
 COPY . .
 
 CMD [ "node", "app.js" ]
+
+EXPOSE 6000/udp

@@ -24,7 +24,7 @@ const createUserObject = async(user)=>{
 const login = async(user)=>{
     try {
          //Query DB
-         const url = 'http://users_api:5000/user/' + user.username
+         const url = 'http://api:6000/user/' + user.username
          console.log("Making request to " + url)
         const response = await axiosInstance.get(url);
         if(response.status === 200){
@@ -46,7 +46,7 @@ const register = async(user)=>{
     try {
         //Query DB
         const userObject = await createUserObject(user);
-        const url = 'http://users_api:5000/user/'
+        const url = 'http://api:6000/user/'
         console.log("Making a request to " + url + " with data:\n" + JSON.stringify(userObject))
         const response = await axiosInstance.post(url, userObject);
         return response.status
