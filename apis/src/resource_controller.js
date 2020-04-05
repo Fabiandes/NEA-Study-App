@@ -125,4 +125,4 @@ const StoreNote = (title, body)=>{
     .catch((err)=>{throw new Error(err);})
 }
 
-module.exports= {CreateSubject, CreateTopic, CreateNote, CreateFlashcard, GetTopic, GetTopics, GetSubjects}
+module.exports= {CreateSubject, CreateTopic, CreateNote, CreateFlashcard, GetTopic, GetTopics, GetSubjects}``1```

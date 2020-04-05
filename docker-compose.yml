@@ -6,9 +6,8 @@ services:
         ports:
             - 5000:5000
         depends_on:
-            - users_api
-            - social_api
-    users_api:
-        build: ./apis/users_api
+            - api
+    api:
+        build: ./apis
     
         
