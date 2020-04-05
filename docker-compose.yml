@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+    backend:
+        build: ./backend/
+        ports:
+            - 5000:5000
+        depends_on:
+            - users_api
+            - social_api
+    users_api:
+        build: ./apis/users_api
+    
+        
