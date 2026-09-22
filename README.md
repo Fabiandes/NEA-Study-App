@@ -1,4 +1,13 @@
+---
+status: archived
+---
+
 # NEA-Study-App
+
+## Summary
+
+The backend for an A-level NEA study application, in Node.
+
 ## Networking
 ### Ports
 * `User Api` - 3000
